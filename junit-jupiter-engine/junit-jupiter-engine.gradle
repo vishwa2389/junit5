@@ -24,7 +24,7 @@ dependencies {
 	testImplementation(project(':junit-platform-launcher'))
 	testImplementation(project(':junit-platform-runner'))
 	testImplementation(project(path: ':junit-platform-engine', configuration: 'testArtifacts'))
-	testImplementation("org.assertj:assertj-core:${assertJVersion}")
+	testImplementation("com.github.joel-costigliola:assertj-core:master-SNAPSHOT")
 	testImplementation("org.mockito:mockito-core:${mockitoVersion}")
 
 	// Include junit-platform-console so that the JUnit Gradle plugin

@@ -21,7 +21,7 @@ dependencies {
 	testImplementation(project(':junit-jupiter-api'))
 	testImplementation(project(':junit-platform-runner'))
 	testImplementation(project(path: ':junit-platform-engine', configuration: 'testArtifacts'))
-	testImplementation("org.assertj:assertj-core:${assertJVersion}")
+	testImplementation("com.github.joel-costigliola:assertj-core:master-SNAPSHOT")
 	testImplementation("org.mockito:mockito-core:${mockitoVersion}")
 
 	// --- Test run-time dependencies ---------------------------------------------

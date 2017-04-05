@@ -25,7 +25,7 @@ dependencies {
 
 	shadow('com.univocity:univocity-parsers:2.4.1')
 
-	testImplementation("org.assertj:assertj-core:${assertJVersion}")
+	testImplementation("com.github.joel-costigliola:assertj-core:master-SNAPSHOT")
 	testImplementation("org.mockito:mockito-core:${mockitoVersion}")
 	testImplementation(project(path: ':junit-platform-engine', configuration: 'testArtifacts'))
 	testImplementation(project(':junit-jupiter-engine'))
