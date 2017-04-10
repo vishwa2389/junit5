@@ -48,6 +48,7 @@ class ServiceLoaderTestEngineRegistry {
 		engine.getGroupId().ifPresent(groupId -> attributes.add("group ID: " + groupId));
 		engine.getArtifactId().ifPresent(artifactId -> attributes.add("artifact ID: " + artifactId));
 		engine.getVersion().ifPresent(version -> attributes.add("version: " + version));
+		engine.getSourceLocation().ifPresent(location -> attributes.add("location: " + location));
 		return attributes;
 	}
 

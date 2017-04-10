@@ -47,7 +47,9 @@ on GitHub.
 
 ===== New Features and Improvements
 
-* ❓
+* Added `getSourceLocation()` method in `TestEngine` interface to provide information
+  about the location from where the engine class was loaded from. When location URL is
+  available, it is logged at configuration-level by the service loading mechanism.
 
 
 [[release-notes-5.0.0-m5-junit-vintage]]

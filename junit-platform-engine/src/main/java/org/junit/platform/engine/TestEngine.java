@@ -12,9 +12,11 @@ package org.junit.platform.engine;
 
 import static org.junit.platform.commons.meta.API.Usage.Experimental;
 
+import java.net.URL;
 import java.util.Optional;
 
 import org.junit.platform.commons.meta.API;
+import org.junit.platform.commons.util.ClassLoaderUtils;
 import org.junit.platform.commons.util.PackageUtils;
 
 /**
@@ -175,4 +177,16 @@ public interface TestEngine {
 			PackageUtils.getAttribute(getClass(), Package::getImplementationVersion).orElse("DEVELOPMENT"));
 	}
 
+	/**
+	 * Get the location from where this engine was loaded from.
+	 *
+	 * <p>The default implementation queries the {@linkplain ClassLoader} of the
+	 * engine class to retrieve the location URL.
+	 *
+	 * @return an {@code Optional} containing the location; never {@code null}
+	 * but potentially empty if the location is unknown
+	 */
+	default Optional<URL> getSourceLocation() {
+		return ClassLoaderUtils.getLocation(this);
+	}
 }
