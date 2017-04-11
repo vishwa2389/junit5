@@ -38,6 +38,19 @@ public final class ClassLoaderUtils {
 	}
 	///CLOVER:ON
 
+	public static ClassLoader getDefaultClassLoader() {
+		try {
+			ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+			if (contextClassLoader != null) {
+				return contextClassLoader;
+			}
+		}
+		catch (Throwable ex) {
+			/* ignore */
+		}
+		return ClassLoader.getSystemClassLoader();
+	}
+
 	/**
 	 * Get the location from which the supplied object's class was loaded.
 	 *
@@ -60,23 +73,22 @@ public final class ClassLoaderUtils {
 			String name = object.getClass().getName();
 			name = name.replace(".", "/") + ".class";
 			try {
-				URL resource = loader.getResource(name);
-				return Optional.ofNullable(resource);
+				return Optional.ofNullable(loader.getResource(name));
 			}
 			catch (Throwable ignore) {
-				// fall through
+				/* ignore */
 			}
 		}
 		// try protection domain
-    try {
-      CodeSource codeSource = object.getClass().getProtectionDomain().getCodeSource();
-      if (codeSource != null) {
-        return Optional.ofNullable(codeSource.getLocation());
-      }
-    }
-    catch (SecurityException ignore) {
-		  // fall through
-    }
+		try {
+			CodeSource codeSource = object.getClass().getProtectionDomain().getCodeSource();
+			if (codeSource != null) {
+				return Optional.ofNullable(codeSource.getLocation());
+			}
+		}
+		catch (SecurityException ignore) {
+			/* ignore */
+		}
 		return Optional.empty();
 	}
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Logger;
 
-import org.junit.platform.commons.util.ReflectionUtils;
+import org.junit.platform.commons.util.ClassLoaderUtils;
 import org.junit.platform.engine.TestEngine;
 
 /**
@@ -27,7 +27,7 @@ class ServiceLoaderTestEngineRegistry {
 
 	public Iterable<TestEngine> loadTestEngines() {
 		Iterable<TestEngine> testEngines = ServiceLoader.load(TestEngine.class,
-			ReflectionUtils.getDefaultClassLoader());
+			ClassLoaderUtils.getDefaultClassLoader());
 		LOG.config(() -> createDiscoveredTestEnginesMessage(testEngines));
 		return testEngines;
 	}
