@@ -13,6 +13,7 @@ package org.junit.platform.commons.util;
 import static org.junit.platform.commons.meta.API.Usage.Internal;
 
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.Optional;
 
 import org.junit.platform.commons.meta.API;
@@ -38,14 +39,15 @@ public final class ClassLoaderUtils {
 	///CLOVER:ON
 
 	/**
-	 * Get the location from where this objects underlying class was loaded from.
+	 * Get the location from which the supplied object's class was loaded.
 	 *
-	 * @param object to find the location its class was loaded from for
+	 * @param object the object for whose class the location should be retrieved
 	 * @return an {@code Optional} containing the URL of the class' location; never
 	 * {@code null} but potentially empty
 	 */
 	public static Optional<URL> getLocation(Object object) {
 		Preconditions.notNull(object, "object must not be null");
+		// determine class loader
 		ClassLoader loader = object.getClass().getClassLoader();
 		if (loader == null) {
 			loader = ClassLoader.getSystemClassLoader();
@@ -53,12 +55,28 @@ public final class ClassLoaderUtils {
 				loader = loader.getParent();
 			}
 		}
+		// try finding resource by name
 		if (loader != null) {
-			String name = object.getClass().getCanonicalName();
+			String name = object.getClass().getName();
 			name = name.replace(".", "/") + ".class";
-			URL resource = loader.getResource(name);
-			return Optional.ofNullable(resource);
+			try {
+				URL resource = loader.getResource(name);
+				return Optional.ofNullable(resource);
+			}
+			catch (Throwable ignore) {
+				// fall through
+			}
 		}
+		// try protection domain
+    try {
+      CodeSource codeSource = object.getClass().getProtectionDomain().getCodeSource();
+      if (codeSource != null) {
+        return Optional.ofNullable(codeSource.getLocation());
+      }
+    }
+    catch (SecurityException ignore) {
+		  // fall through
+    }
 		return Optional.empty();
 	}
 }

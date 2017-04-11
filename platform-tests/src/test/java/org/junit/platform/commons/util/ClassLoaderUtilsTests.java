@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 /**
- * Unit tests for {@link PackageUtils}.
+ * Unit tests for {@link ClassLoaderUtils}.
  *
  * @since 1.0
  */
@@ -37,6 +37,7 @@ class ClassLoaderUtilsTests {
 		assertTrue(ClassLoaderUtils.getLocation(this).isPresent());
 		assertTrue(ClassLoaderUtils.getLocation("").isPresent());
 		assertTrue(ClassLoaderUtils.getLocation(0).isPresent());
+		assertTrue(ClassLoaderUtils.getLocation(Thread.State.RUNNABLE).isPresent());
 	}
 
 }

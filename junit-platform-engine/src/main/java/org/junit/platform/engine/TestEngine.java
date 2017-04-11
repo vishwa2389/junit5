@@ -178,7 +178,7 @@ public interface TestEngine {
 	}
 
 	/**
-	 * Get the location from where this engine was loaded from.
+	 * Get the location from which this engine was loaded.
 	 *
 	 * <p>The default implementation queries the {@linkplain ClassLoader} of the
 	 * engine class to retrieve the location URL.
